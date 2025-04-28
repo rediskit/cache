@@ -1,0 +1,6 @@
+src/
+tests/
+example/
+.github/
+*.config.js
+bun.lock

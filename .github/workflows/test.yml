@@ -1,0 +1,43 @@
+name: Test
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                node: [18.x, 20.x]
+
+        services:
+            redis:
+                image: redis:7 # Use Redis 7.x stable version
+                ports:
+                    - 6379:6379
+                options: >-
+                    --health-cmd "redis-cli ping"
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node }}
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Run tests
+              env:
+                  REDIS_HOST: 127.0.0.1 # Setting the host as localhost since Redis is a service
+                  REDIS_PORT: 6379 # Setting the port as the default Redis port
+              run: npm test

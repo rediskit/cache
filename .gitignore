@@ -1,0 +1,8 @@
+test-reports/
+node_modules/
+dist/
+bun.lock
+.DS_Store
+.npmrc
+.env
+*.log
