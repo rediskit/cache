@@ -57,7 +57,7 @@ const cache = Cache.Cluster([{ host: 'cluster-node1', port: 7000 }], { scaleRead
 ### Advanced Configuration
 
 ```typescript
-import { Redis } from 'ioredis'
+import { Redis } from '@rediskit/cache'
 
 // iordis client
 const redis = new Redis({
